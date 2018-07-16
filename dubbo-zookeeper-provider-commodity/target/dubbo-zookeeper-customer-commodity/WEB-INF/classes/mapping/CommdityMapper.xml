@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.ZqzMapper.CommodityMapper">
+
+
+    <!--<select id="queryList" resultType="com.jk.model.CommoditPar">
+        select * from (
+           select a.*,rownum rn  from (
+               select * from commodityparameter where 1=1
+         )a where rownum &lt;=#{end}
+              )b where b.rn &gt;#{start}
+    </select>
+
+
+    <select id="queryListCount" resultType="Long">
+        select count(*) from commodityparameter where 1=1
+    </select>-->
+
+    <select id="queryList" resultType="com.jk.model.zqzmodel.CommoditPar">
+       select a.*, b.parameter ,c.text from commodityparameter a ,
+(SELECT commodityids,wmsys.wm_concat(to_char(parameter)) as parameter FROM commoditparameter GROUP BY commodityids) b, t_spfl c
+where a.commodityid = b.commodityids and a.commoditytype = c.id  order by a.commodityorderby
+    </select>
+
+
+    <delete id="deleteCommodit">
+        delete commodityparameter where commodityid in (${ids})
+    </delete>
+
+
+    <insert id="addCommInserts">
+        INSERT INTO commoditparameter (id,parameter,commodityids)
+        VALUES (sql.nextval,#{item.parameter},#{item.commodityids})
+    </insert>
+
+
+    <insert id="addCommInsert">
+        INSERT INTO commodityparameter (commodityid,commodityname,commoditytype,commoditycanshu,commodityorderby)
+        VALUES (#{comm.commodityid},#{comm.commodityname},#{comm.commoditytype},#{comm.commoditycanshu},#{comm.commodityorderby})
+    </insert>
+
+
+    <select id="queryMemberList" resultType="com.jk.model.zqzmodel.Memberbasic">
+            select a.*,b.gradename from memberbasic a , memberbasicgrade b where a.memberbasicgradeid = b.gradeid
+    </select>
+
+
+    <select id="querymemberbasicgrade" resultType="com.jk.model.zqzmodel.Memberbasicgrade">
+        select * from memberbasicgrade
+    </select>
+
+
+    <insert id="addMembers">
+        insert into memberbasic c
+        (c.memberbasicid,
+        c.memberbasiclogname,
+        c.memberbasicpassword,
+        c.memberbasicemail,
+        c.memberbasicintegral,
+        c.memberbasicbalance,
+        c.memberbasicgradeid,
+        c.memberbasicstatus,
+        c.memberbasiccreatdate)
+      values (#{member.memberbasicid},
+                 #{member.memberbasiclogname},
+                   #{member.memberbasicpassword},
+                    #{member.memberbasicemail},
+                     #{member.memberbasicintegral},
+                      #{member.memberbasicbalance},
+                        #{member.memberbasicgradeid},
+                          #{member.memberbasicstatus},
+                           #{member.memberbasiccreatdate})
+    </insert>
+
+
+    <select id="queryMembersId" resultType="com.jk.model.zqzmodel.Memberbasic">
+        select memberbasicid from memberbasic
+    </select>
+
+
+
+
+
+    <insert id="addBasicdatum">
+        insert into memberbasicdatum a
+        (a.datumid,
+            a.datummemberid,
+                a.datumname,
+                    a.datumgender,
+                      a.datumbrithday,
+                          a.datumregion,
+                            a.datumaddress)
+        values (#{memberbasicdatum.datumid},
+                   #{memberbasicdatum.datummemberid},
+                      #{memberbasicdatum.datumname},
+                        #{memberbasicdatum.datumgender},
+                          #{memberbasicdatum.datumbrithday},
+                            #{memberbasicdatum.datumregion},
+                              #{memberbasicdatum.datumaddress})
+    </insert>
+
+
+    <delete id="deletemember">
+        delete from memberbasic where memberbasicid in (${ids})
+    </delete>
+
+
+    <select id="querychakanxinxi" resultType="com.jk.model.zqzmodel.Memberbasic">
+        select a.*,b.datumname,b.datumgender,b.datumbrithday,b.datumregion,b.datumaddress,c.gradename from memberbasic a , memberbasicdatum b, memberbasicgrade c where a.memberbasicid = b.datummemberid and
+          a.memberbasicgradeid = c.gradeid and a.memberbasicid  = #{ids}
+    </select>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.hgcMapper.IhgcComMapper">
+
+        <select id="queryCount" resultType="long">
+            select count(*) from t_commodityproperty
+
+        </select>
+    <select id="querycomproperty" resultType="com.jk.model.hgcmodel.commodityproperty">
+
+select * from t_commodityproperty t1 ,
+(SELECT proid,wmsys.wm_concat(to_char(prooption)) as options FROM t_propertyoption GROUP BY proid) t2
+where t1.id=t2.proid
+    </select>
+</mapper>

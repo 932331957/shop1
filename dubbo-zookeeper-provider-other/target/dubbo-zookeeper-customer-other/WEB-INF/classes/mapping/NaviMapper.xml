@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.lhMapper.NaviMapper">
+
+
+    <select id="queryList" resultType="com.jk.model.lhmodel.Navi">
+
+        select * from t_navi
+
+    </select>
+    <select id="queryNei" resultType="com.jk.model.lhmodel.Navigation">
+        select * from t_navigation where 1=1
+
+      <if test="id !=null and id != ''" >
+
+        and id = #{id}
+      </if>
+
+    </select>
+
+    <insert id="addNeiRong">
+
+        insert into t_navi values (#{id},#{name},#{neirong},#{lianjie},#{weizhi},#{shezhi},${paixu})
+
+    </insert>
+
+    <delete id="daleteNeiRong" >
+        delete t_navi where id in (${id})
+
+    </delete>
+
+    <select id="editNei" resultType="com.jk.model.lhmodel.Navi">
+
+        select * from t_navi where id = #{id}
+
+    </select>
+
+    <update id="updateNei">
+
+        update t_navi set name = #{name},neirong = #{neirong},lianjie = #{lianjie},
+        weizhi = #{weizhi},shezhi = #{shezhi},paixu = ${paixu} where id = #{id}
+    </update>
+</mapper>
