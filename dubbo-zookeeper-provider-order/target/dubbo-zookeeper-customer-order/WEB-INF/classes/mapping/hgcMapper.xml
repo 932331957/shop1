@@ -5,4 +5,8 @@
     select t.*, t.rowid from t_order t
 
 </select>
+    <select id="queryorderbyid" resultType="com.jk.model.hgcmodel.Order">
+        select t.*  from t_order t where t.id=#{id}
+
+    </select>
 </mapper>
