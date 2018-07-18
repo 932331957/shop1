@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.wyMapper.SptypeMapper">
+
+
+  <!--查询商品分类-->
+  <select id="querySpfl" resultType="com.jk.model.wymodel.Sptype">
+    select * from  t_spfl
+  </select>
+
+   <!--查询顶级分类-->
+  <select id="querySptypes" resultType="com.jk.model.wymodel.Sptype">
+    select * from t_spfl where pid = #{pid}
+  </select>
+
+<!--添加-->
+  <insert id="addSptype">
+     INSERT INTO  t_spfl(id,text,pid,px,bt,gjc,ms,pp)VALUES(sql.nextval,#{text},#{pid},#{px},#{bt},#{gjc},#{ms},#{pp})
+  </insert>
+  <!--删除-->
+  <delete id="deleteSptype">
+    delete from t_spfl where id in (${ids})
+  </delete>
+<!--修改-->
+  <select id="querySptypeById" resultType="com.jk.model.wymodel.Sptype">
+    select * from t_spfl where id = #{id}
+  </select>
+
+  <update id="updateSptype">
+     UPDATE t_spfl SET TEXT= #{text},PID=#{pid},PX=#{px},BT=#{bt},GJC=#{gjc},MS=#{ms},PP=#{pp} WHERE ID = #{id}
+  </update>
+
+</mapper>

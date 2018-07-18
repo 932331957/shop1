@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.dszMapper.EchartsMapper">
+    <resultMap id="BaseResultMap" type="com.jk.model.DszModel.Pinpai">
+        <id column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="PINPAINAME" jdbcType="VARCHAR" property="pinpainame" />
+        <result column="PINPAILOGO" jdbcType="VARCHAR" property="pinpailogo" />
+        <result column="PINPAIURL" jdbcType="TIMESTAMP" property="pinpaiurl" />
+        <result column="PAIXU" jdbcType="TIMESTAMP" property="paixu" />
+    </resultMap>
+    <select id="quertEcharts" parameterType="com.jk.model.DszModel.Pinpai" resultMap="BaseResultMap">
+       select pinpainame,count(paixu) from  T_PINPAI
+        group by pinpainame order by count(paixu)
+
+    </select>
+</mapper>
