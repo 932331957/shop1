@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.SysUserMapper" >
+
+  <!--用户登录-->
+  <select id="loginuser"  resultType="com.jk.model.SysUser">
+        select * from sys_user where usercode =#{usercode}
+  </select>
+  <!-- 通过用户id获得菜单列表信息-->
+  <select id="findMenuListByUserId"  resultType="com.jk.model.SysPermission">
+    select p.id, p.name, p.type, p.url, p.percode, p.parentid, p.parentids, p.sortstring, p.available from sys_user_role ur, sys_role_permission rp, sys_permission p where ur.sys_role_id = rp.sys_role_id
+    and rp.sys_permission_id = p.id and ur.sys_user_id = #{id} and p.type = "menu"
+  </select>
+  <!--通过用户id获得权限列表信息-->
+  <select id="findPermissionListByUserId" resultType="com.jk.model.SysPermission">
+    select p.id, p.name, p.type, p.url, p.percode, p.parentid, p.parentids, p.sortstring, p.available from sys_user_role ur, sys_role_permission rp, sys_permission p where ur.sys_role_id = rp.sys_role_id
+    and rp.sys_permission_id = p.id and ur.sys_user_id = #{id} and p.type = "permission"
+  </select>
+</mapper>
